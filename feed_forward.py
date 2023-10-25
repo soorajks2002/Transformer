@@ -9,11 +9,11 @@ class FeedForward(torch.nn.Module) :
         self.normalization_layer = torch.nn.LayerNorm(input_size)
         
     def __call__(self, x) :
-        x = self.flatten_layer(x)
-        out = self.linear_layer(x)
+        out = self.flatten_layer(x)
+        out = self.linear_layer(out)
         out = self.activation_layer(out)
         out = self.normalization_layer(out)
-        
+        out = out.view(x.size(0), x.size(1), x.size(2))
         out += x
         
         return out
